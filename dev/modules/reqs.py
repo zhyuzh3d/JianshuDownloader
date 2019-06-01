@@ -17,7 +17,6 @@ curImg = '...'  # 正在获取的图片名
 state = '等待中'  # 当前状态，等待中，获取中，已完成。
 
 
-
 def genInfoStr():  # 拼接信息字符串
     global atotal
     global afini
@@ -62,7 +61,7 @@ def getArticle(art, vol, opt):  # 获取文章内容
         imgUrl = iu.split('?')[0]
         global curImg
         curImg = os.path.basename(imgUrl)
-        print('GETTING IMAGE:',curImg)
+        print('GETTING IMAGE:', curImg)
         if not os.path.exists(imgUrl):
             res = requests.get(imgUrl)
             img = res.content
@@ -107,15 +106,15 @@ def getArticlesList(vol, opt, artnarr):  # 获取文章列表
     afini = 0
     print("ATOTAL:", atotal, afini)
 
-    print(len(getlist))
-
+    n = 0
     for d in getlist:
         global curArt
-        curArt = d['title']
+        curArt = str(n)+':' + d['title']
+        n += 1
         print('GETTING ARTICLE:', curArt)
         time.sleep(1)
         getArticle(d, vol, opt)
-        afini += 1 #计数加1
+        afini += 1  # 计数加1
     return 'getArticlesList OK!'
 
 
@@ -129,9 +128,11 @@ def getVolums(opt, volnarr, artnarr):  # 获取文集列表
         for i in volnarr:
             if i < len(resdata):
                 getlist.append(resdata[i])
+    n = 0  # 序号
     for d in getlist:
         global curVol
-        curVol = d['name']
+        curVol = str(n)+':'+d['name']
+        n += 1
         print('GETTING VOLUMN:', curVol)
         time.sleep(1)
         getArticlesList(d, opt, artnarr)
@@ -141,3 +142,5 @@ def getVolums(opt, volnarr, artnarr):  # 获取文集列表
     state = '已完成'
     print(state)
     return 'getVolums OK!'
+
+#...
