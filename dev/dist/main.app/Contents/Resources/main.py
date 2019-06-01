@@ -22,23 +22,19 @@ def run():  # 启动获取动作
     opts.headers = opts.str2obj(hdrs, '\n', ': ')
 
     volnarr = []
+    vols=vols.replace('\n', '')
     volsarr = vols.split(',')
     volnarr = map(lambda x: int(x), volsarr)
     volnarr = list(set(volnarr))
 
     artnarr = []
     artsarr = arts.split(',')
-    artnarr = map(lambda x: int(x), artsarr)
+    map(lambda x: int(x), artsarr)
     artnarr = list(set(artnarr))
 
     writeHeaders()  # 保存设置
 
     reqs.getAll(opts, volnarr, artnarr)
-
-
-
-
-
 
 
 def refreshInfo():  # 信息的自刷新函数
@@ -107,19 +103,22 @@ info.grid(row=rown,  padx=10, ipady=10, ipadx=10, sticky=W)
 info.after(500, refreshInfo)  # 自动循环更新
 
 
-
 def writeHeaders():  # 将header写入到临时文件
     hdrs = iptHeader.get("1.0", END)
     with open(os.getcwd()+'/config.txt', 'a') as f:
         f.write(hdrs)
 
-def  readHeaders(): #读取设置文件并填充到界面
-    fpath=os.getcwd()+'/config.txt'
+
+def readHeaders():  # 读取设置文件并填充到界面
+    fpath = os.getcwd()+'/config.txt'
     if os.path.exists(fpath):
-        f=open(fpath,'r')
-        hdrs=f.read()
-        iptHeader.insert(INSERT,hdrs)
+        f = open(fpath, 'r')
+        hdrs = f.read()
+        iptHeader.insert(INSERT, hdrs)
+
 
 readHeaders()
 
 root.mainloop()
+
+#...
